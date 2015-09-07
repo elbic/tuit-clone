@@ -1,0 +1,38 @@
+{% extends 'bases/base.html' %}
+{% block content %}
+
+<div class="row">
+
+</div>
+<div class="row">
+  <div class="col-lg-4">
+    <p>Username: {{ request.user.username }}</p>
+    <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+    <p><a href="{% url 'update_profile' pk=request.user.id %}">Edit profiile</a><p>
+    <p><a href="{% url 'tweets_url:timeline' %}">Timeline</a><p>
+  </div>
+  <div class="col-lg-8">
+    <form method="post" action="{% url 'tweets_url:add_tweet'%}">
+      {% csrf_token %}
+      <textarea name="tweet" id="tweet" rows="3" class="form-control"></textarea>
+      <input type="submit" name="submit" class="btn btn-primary" value="Tweet">
+    </form>
+    <ul class="list-group">
+        {% for tweets in list_tweets %}
+            <li class="list-group-item">
+              <label for="">@{{ tweets.user }}:</label>
+              <p>
+                {{ tweets.tweet }}
+              </p>
+              <label for=""><small>{{ tweets.date }}</small></label>
+            </li>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+
+  <a href="{% url 'tweet_logout' %}">logout</a>
+  <a href="{% url 'tweets_url:add_tweet' %}">add tweet</a>
+{% endblock %}
