@@ -6,6 +6,7 @@
 </div>
 <div class="row">
   <div class="col-lg-4">
+    <p><a href="{% url 'tweets_url:tweets_home' %}">Home</a></p>
     <p>Username: {{ request.user.username }}</p>
     <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
     <p><a href="{% url 'update_profile' request.user.id %}">Edit profiile</a><p>
@@ -25,7 +26,7 @@
               </p>
               <label for=""><small>{{ tweets.date }}</small></label>
               <a href="{% url 'tweets_url:tweet_message' id_tweet=tweets.id %}" class="href">more</a>
-              <a href="delete/{{ tweets.id }}/">delete</a>
+              <a href="{% url 'tweets_url:delete_tweet' id_tweet=tweets.id %}">delete</a>
               <a href="{% url 'tweets_url:edit_tweet' id_tweet=tweets.id %}">edit</a>
 
             </li>

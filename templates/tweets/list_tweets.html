@@ -8,6 +8,7 @@
   <div class="col-lg-4">
     <p>Username: {{ request.user.username }}</p>
     <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+    <p>Email: {{ request.user.email }}</p>
     <p><a href="{% url 'update_profile' pk=request.user.id %}">Edit profiile</a><p>
     <p><a href="{% url 'tweets_url:timeline' %}">Timeline</a><p>
   </div>
@@ -17,6 +18,14 @@
       <textarea name="tweet" id="tweet" rows="3" class="form-control"></textarea>
       <input type="submit" name="submit" class="btn btn-primary" value="Tweet">
     </form>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+
+
     <ul class="list-group">
         {% for tweets in list_tweets %}
             <li class="list-group-item">
@@ -25,6 +34,21 @@
                 {{ tweets.tweet }}
               </p>
               <label for=""><small>{{ tweets.date }}</small></label>
+              <a href="{% url 'tweets_url:list_favorites' id_tweet=tweets.id %}">{{ tweets.user_favs.count }}</a>
+              {% if tweets.id in user_favs %}
+                <small><a href="{% url 'tweets_url:del_fav' id_tweet=tweets.id  %}">Delete favorite</a></small>
+              {% else %}
+                <small><a href="{% url 'tweets_url:favorite' id_tweet=tweets.id  %}">Add favorite</a></small>
+              {% endif %}
+
+              <a href="{% url 'tweets_url:list_retweets' id_tweet=tweets.id %}">{{ tweets.user_rts.count }}</a>
+              {% if tweets.id in user_rts %}
+                <small><a href="{% url 'tweets_url:del_rt' id_tweet=tweets.id  %}">Delete Retweet</a></small>
+              {% else %}
+                <small><a href="{% url 'tweets_url:add_rt' id_tweet=tweets.id  %}">Retweet</a></small>
+              {% endif %}
+
+
             </li>
         {% endfor %}
     </ul>

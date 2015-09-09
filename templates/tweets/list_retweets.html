@@ -1,0 +1,21 @@
+{% extends 'bases/base.html' %}
+{% block content %}
+
+<div class="row">
+
+</div>
+<div class="row">
+  <div class="col-lg-4">
+  <div class="col-lg-8">
+    <p>{{ favorites.tweet }}</p>
+    <ul class="list-group">
+      {% if favorites.user_rts.all %}
+        {% for user in favorites.user_rts.all %}
+          <li class="list-group-item">{{ user.username }}<small></small></li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+  </div>
+</div>
+{% endblock %}

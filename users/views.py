@@ -12,15 +12,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db.models import Q
 from django.contrib.auth.models import User
 
-# from users.forms import Profile
+from users.forms import Profile
 
 
 class Profile(UpdateView):
     template_name = 'users/update_profile.html'
     model = User
     success_url = reverse_lazy('tweets_url:tweets_home')
-    fields = ['email','first_name', 'last_name']
-    #form_class = Profile
+    #fields = ['email','first_name', 'last_name']
+    form_class = Profile
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -1,6 +1,6 @@
 {% extends 'bases/base.html' %}
 {% block content %}
-<div class="row" class="form">
+<div class="col-lg-5" class="form">
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -10,7 +10,7 @@
           {{ field }}
       </div>
     {% endfor %}
-    <input type="submit">
+    <input type="submit" class="btn btn-primary">
   </form>
 </div>
 {% endblock %}
